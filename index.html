@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maths Quest: The Five Realms</title>
+<style>
+:root{--ink:#17223b;--muted:#62708a;--paper:#f7f8ff;--card:#fff;--purple:#7057d9;--teal:#16a99a;--gold:#ffca55;--pink:#ff7c9c;--line:#e4e8f4;--good:#16845b;--bad:#b83d5a}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(135deg,#edf0ff,#f8fbff 50%,#e7faf5);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:var(--ink);min-height:100vh}
+header{background:#fff9;border-bottom:1px solid var(--line);padding:14px 18px;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.top{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:900;font-size:1.15rem}.brand span{color:var(--purple)}.stats{display:flex;gap:8px;flex-wrap:wrap}.pill{background:#f0efff;border-radius:999px;padding:7px 11px;font-size:.85rem;font-weight:800}.pill.gold{background:#fff2c9}
+main{max-width:900px;margin:22px auto;padding:0 15px 36px}.hero{background:linear-gradient(125deg,#6b57d9,#9a66e8 65%,#ed83b4);border-radius:26px;color:white;padding:24px 24px 22px;box-shadow:0 14px 35px #6b57d926;position:relative;overflow:hidden}.hero:after{content:"✦";font-size:150px;position:absolute;right:22px;top:-30px;opacity:.18}.hero h1{font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.05;margin:7px 0 10px;max-width:600px}.hero p{max-width:620px;line-height:1.5;margin:0 0 16px}.tag{font-weight:900;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;opacity:.9}.button{border:0;border-radius:14px;padding:12px 17px;font-size:1rem;font-weight:900;cursor:pointer;transition:transform .12s,filter .12s}.button:hover{transform:translateY(-2px);filter:brightness(1.03)}.primary{background:var(--gold);color:#372c54}.secondary{background:#f0efff;color:#5140b1}.light{background:white;color:var(--purple)}.small{padding:8px 12px;font-size:.88rem}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;margin-top:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:19px;box-shadow:0 8px 24px #29345b08}.panel h2{margin:0 0 12px;font-size:1.2rem}.realm-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.realm{border-radius:14px;padding:11px;background:#f6f5ff;font-weight:800;font-size:.9rem}.realm:nth-child(2){background:#eafaf7}.realm:nth-child(3){background:#fff5dd}.realm:nth-child(4){background:#fff0f4}.realm:nth-child(5){background:#edf5ff}.realm small{display:block;color:var(--muted);font-weight:600;margin-top:3px}.instructions{padding-left:20px;color:#46536d;line-height:1.6;margin-bottom:0}.game{display:none}.gamehead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.progress{height:9px;background:#e7eaf5;border-radius:99px;overflow:hidden;margin:10px 0 18px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--teal),#70d6ae);transition:width .3s}.question-card{padding:clamp(18px,4vw,30px)}.qmeta{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.topic{display:inline-block;border-radius:99px;background:#f0efff;color:#5745b9;font-weight:900;padding:6px 10px;font-size:.78rem}.qnum{font-weight:800;color:var(--muted);font-size:.9rem}.story{color:var(--muted);margin:18px 0 6px;font-size:.94rem}.question{font-size:clamp(1.35rem,4vw,1.9rem);line-height:1.3;font-weight:900;margin:8px 0 20px;white-space:pre-line}.answer-row{display:flex;gap:9px;align-items:stretch}.answer-row input{min-width:0;flex:1;border:2px solid #dfe4f2;border-radius:14px;padding:13px 14px;font-size:1.1rem;font-family:inherit;outline:none}.answer-row input:focus{border-color:var(--purple);box-shadow:0 0 0 3px #7057d91b}.hint{font-size:.83rem;color:var(--muted);margin:8px 0 0}.feedback{display:none;margin-top:16px;border-radius:16px;padding:15px;line-height:1.5}.feedback.good{display:block;background:#e8faf1;border:1px solid #b9efd4;color:#135b40}.feedback.bad{display:block;background:#fff0f3;border:1px solid #ffc7d2;color:#852b43}.feedback h3{margin:0 0 6px}.work{background:#ffffffb8;border-radius:12px;padding:10px 12px;margin-top:9px;color:#293650}.work ol{margin:7px 0;padding-left:21px}.action-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.notice{font-size:.9rem;color:var(--muted);margin-top:12px}.footer-note{color:var(--muted);font-size:.85rem;text-align:center;margin-top:17px}.summary{display:none}.score-big{font-size:3.3rem;font-weight:1000;color:var(--purple);line-height:1}.badge{display:inline-block;padding:7px 10px;border-radius:99px;background:#fff2c9;margin:5px 4px 0 0;font-size:.85rem;font-weight:900}.center{text-align:center}.reward{font-size:3rem;margin:4px}.summary h2{font-size:1.8rem;margin:10px 0}.muted{color:var(--muted)}.hidden{display:none!important}
+@media(max-width:680px){.grid{grid-template-columns:1fr}.hero{padding:22px}.top{align-items:flex-start}.stats{justify-content:flex-end}.answer-row{flex-direction:column}.answer-row .button{width:100%}.realm-list{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="brand">✨ <span>MATHS QUEST</span></div><div class="stats"><div class="pill">⭐ XP <span id="xp">0</span></div><div class="pill gold">🪙 Coins <span id="coins">0</span></div></div></div></header>
+<main>
+<section id="welcome">
+  <div class="hero"><div class="tag">Year 7 • Adventure mode</div><h1>The Five Realms<br>Maths Quest</h1><p>A mischievous Maths Dragon has scrambled the five realms. Solve the challenges, collect XP and coins, and restore the Crystal of Numbers. Every mistake is a chance to level up!</p><button class="button primary" id="start">🚀 Start my quest</button></div>
+  <div class="grid">
+    <div class="panel"><h2>🗺️ Your adventure map</h2><div class="realm-list">
+      <div class="realm">🔢 Number Peaks<small>Factors, primes, multiples</small></div>
+      <div class="realm">🔮 Algebra Forest<small>Expressions and simplifying</small></div>
+      <div class="realm">🎯 Rounding Ridge<small>Place value and estimation</small></div>
+      <div class="realm">🏰 Shape Castle<small>Area and perimeter</small></div>
+      <div class="realm">🌊 Fraction Falls<small>Fraction operations</small></div>
+    </div><p class="notice">Every round mixes all five topics. The question order and numbers change each time you play.</p></div>
+    <div class="panel"><h2>🎮 How to play</h2><ul class="instructions"><li>Each round has <b>10 main questions</b>.</li><li>Get one right for a star, XP and coins.</li><li>Wrong answer? You’ll see the full working, then that skill returns a few questions later.</li><li>Retries earn recovery XP and help you master tricky skills.</li><li>Finish each round to see your score and earn a badge.</li></ul></div>
+  </div>
+</section>
+
+<section id="game" class="game">
+  <div class="gamehead"><div><b id="round-label">Round 1</b><div class="muted" id="round-sub">Mixed realm challenge</div></div><button class="button secondary small" id="quit">Pause / exit</button></div>
+  <div class="progress"><div class="bar" id="progress"></div></div>
+  <div class="panel question-card">
+    <div class="qmeta"><span class="topic" id="topic">Number Peaks</span><span class="qnum" id="qnum">Question 1 of 10</span></div>
+    <div class="story" id="story"></div><div class="question" id="question"></div>
+    <div class="answer-row"><input id="answer" type="text" autocomplete="off" placeholder="Type your answer…" aria-label="Your answer"><button class="button primary" id="submit">Check answer ✓</button></div>
+    <div class="hint" id="hint">Tip: You can type fractions like 3/4, decimals like 0.75, or algebra like 3x+2.</div>
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+    <div class="action-row hidden" id="next-row"><button class="button secondary" id="next">Next challenge →</button></div>
+  </div>
+  <div class="footer-note">✨ Be brave, show your thinking, and remember: mistakes are clues.</div>
+</section>
+
+<section id="summary" class="summary">
+ <div class="panel center"><div class="reward" id="reward-emoji">🏆</div><div class="tag" style="color:#7057d9">ROUND COMPLETE</div><h2 id="summary-title">Realm restored!</h2><div class="score-big"><span id="score">0</span><span style="font-size:1.5rem;color:#8992a7">/10</span></div><p id="summary-copy" class="muted"></p><div id="badges"></div><hr style="border:0;border-top:1px solid #e4e8f4;margin:20px 0"><p><b>Round stats</b></p><p id="stats-copy" class="muted"></p><button class="button primary" id="again">🔁 Play another mixed round</button> <button class="button secondary" id="home">🏠 Adventure map</button></div>
+</section>
+</main>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+let xp=0, coins=0, round=0, mainQs=[], index=0, score=0, correctCount=0, retryCount=0, queue=[], current=null, awaiting=false, missedSkills=[], roundMissed=0, roundCorrect=0;
+const topics = [
+ {name:"🔢 Number Peaks", short:"Number properties"},
+ {name:"🔮 Algebra Forest", short:"Algebra"},
+ {name:"🎯 Rounding Ridge", short:"Place value & rounding"},
+ {name:"🏰 Shape Castle", short:"Area & perimeter"},
+ {name:"🌊 Fraction Falls", short:"Fractions"}
+];
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[rand(0,a.length-1)];
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+const frac=(n,d)=>{let g=gcd(n,d);return `${n/g}/${d/g}`};
+const fmt=n=>Number.isInteger(n)?String(n):String(Number(n.toFixed(4)));
+const q=(topic,story,question,answer,work,skill,extra={})=>({topic,story,question,answer:String(answer).replace(/\s/g,''),work,skill,...extra});
+function makeQ(topicIndex, forcedSkill=null){
+ let t=topicIndex;
+ if(t===0){
+  let type=forcedSkill||pick(["factor","multiple","hcf","lcm","prime","primefactor","square","cube","triangular","simplifycalc"]);
+  if(type==="factor"){let n=pick([18,20,24,28,30,36,42,48]);let f=[];for(let i=1;i<=n;i++)if(n%i===0)f.push(i);return q(t,"The Number Peaks gate opens when you list every factor.","List all positive factors of "+n+" in ascending order (separate with commas).",f.join(","),["A factor divides the number exactly, with no remainder.","Check divisor pairs: 1 × "+n+", 2 × "+(n/2)+", and continue until the pairs repeat.","The factors in ascending order are: "+f.join(", ")+"."],"factor",{setAnswer:f.join(",")})}
+  if(type==="multiple"){let n=rand(3,12),k=rand(4,7),arr=Array.from({length:5},(_,i)=>n*(i+1));return q(t,"A mountain troll wants the first five stepping stones.","Write the first five positive multiples of "+n+" (separate with commas).",arr.join(","),["Multiples are found by multiplying the number by 1, 2, 3, and so on.",""+n+" × 1 = "+n+"; × 2 = "+(n*2)+"; × 3 = "+(n*3)+"; × 4 = "+(n*4)+"; × 5 = "+(n*5)+".","Answer: "+arr.join(", ")+"."],"multiple",{setAnswer:arr.join(",")})}
+  if(type==="hcf"||type==="lcm"){let a=pick([12,15,18,20,24,30]),b=pick([8,10,12,14,16,18]);while(a===b)b=rand(6,20);let common=[];for(let i=1;i<=Math.max(a,b);i++)if(a%i===0&&b%i===0)common.push(i);let h=common[common.length-1],l=a*b/h,ans=type==="hcf"?h:l;return q(t,"Two paths through the mountain share number markers.","Find the "+(type==="hcf"?"HCF":"LCM")+" of "+a+" and "+b+" by listing factors or multiples.",ans, type==="hcf"?["Factors of "+a+": "+Array.from({length:a},(_,i)=>i+1).filter(i=>a%i===0).join(", ")+".","Factors of "+b+": "+Array.from({length:b},(_,i)=>i+1).filter(i=>b%i===0).join(", ")+".","The highest common factor is "+h+"."]:["Multiples of "+a+" include "+Array.from({length:8},(_,i)=>a*(i+1)).join(", ")+".","Multiples of "+b+" include "+Array.from({length:8},(_,i)=>b*(i+1)).join(", ")+".","The first common multiple is "+l+".",],"hcf-lcm")}
+  if(type==="prime"){let n=pick([17,19,21,23,27,29,31,33,37,39,41]);let isPrime=true;for(let i=2;i*i<=n;i++)if(n%i===0)isPrime=false;return q(t,"A crystal is safe only if its number is prime.","Is "+n+" a prime number? Answer yes or no.",isPrime?"yes":"no",["A prime number has exactly two positive factors: 1 and itself.","Check whether any whole number from 2 up to the square root divides "+n+" exactly.",isPrime? n+" is prime because no whole number from 2 up to its square root divides it exactly.":n+" is not prime because it has a factor other than 1 and itself."],"prime")}
+  if(type==="primefactor"){let primes=[2,3,5,7],a=pick(primes),b=pick(primes),c=pick([2,3,5]);let n=a*b*c;let factors=[a,b,c].sort((x,y)=>x-y);return q(t,"The dragon’s lock needs a prime-factor code.","Write "+n+" as a product of prime factors. Use × signs (e.g. 2×3×5).",factors.join("×"),["Break "+n+" into factors: "+a+" × "+(b*c)+" = "+n+".","Keep splitting composite factors until every factor is prime.","Prime factors: "+factors.join(" × ")+"."],"primefactor",{setAnswer:factors.join("x")})}
+  if(type==="square"){let n=rand(2,15),v=n*n;return q(t,"Find the square-number rune.","What is "+v+"? (It is "+n+" squared.)",v,["A square number is a whole number multiplied by itself.",""+n+"² = "+n+" × "+n+".",""+n+" × "+n+" = "+v+"."],"square")}
+  if(type==="cube"){let n=rand(2,6),v=n*n*n;return q(t,"Find the cube-number rune.","What is "+v+"? (It is "+n+" cubed.)",v,["A cube number is a whole number multiplied by itself three times.",""+n+"³ = "+n+" × "+n+" × "+n+".",""+n+" × "+n+" = "+(n*n)+"; "+(n*n)+" × "+n+" = "+v+"."],"cube")}
+  if(type==="triangular"){let n=rand(3,9),v=n*(n+1)/2;return q(t,"Triangular stones are stacked in rows: 1, then 2, then 3…","What is the "+n+"th triangular number?",v,["Add the whole numbers from 1 to "+n+".","Use the rule n(n + 1) ÷ 2.",""+n+" × "+(n+1)+" ÷ 2 = "+v+"."],"triangular")}
+  let a=rand(4,12),b=rand(2,8);return q(t,"Use number properties to make a calculation easier.","Calculate "+a+" × "+b+" + "+a+" × "+(10-b)+".",a*10,["Both terms contain a factor of "+a+".","Factor it out: "+a+" × ["+b+" + "+(10-b)+"].","Inside the brackets: "+b+" + "+(10-b)+" = 10, so "+a+" × 10 = "+a*10+"."],"simplifycalc");
+ }
+ if(t===1){
+  let type=forcedSkill||pick(["notation","form","like","multi","multiply","divide","expand","expandSimplify","factorise"]);
+  if(type==="notation"){let n=rand(2,9);return q(t,"The forest wizard charges "+n+" gems for each potion.","Write an expression for the cost of x potions, plus a 4-gem delivery fee.",n+"x+4",["Let x be the number of potions.","Each potion costs "+n+" gems, so x potions cost "+n+"x.","Add the 4-gem fee: "+n+"x + 4."],"notation")}
+  if(type==="form"){let n=rand(2,8),m=rand(2,9);return q(t,"A magic number is multiplied by "+n+" and then "+(m)+" is added.","Write this as an algebraic expression using x.",n+"x+"+m,["Start with the unknown number x.","Multiplying x by "+n+" gives "+n+"x.","Then add "+m+": "+n+"x + "+m+"."],"form")}
+  if(type==="like"){let a=rand(2,8),b=rand(2,8),c=rand(1,6);return q(t,"Collect the matching leaves in the Algebra Forest.","Simplify: "+a+"x + "+b+"x - "+c+"x.",(a+b-c)+"x",["These are like terms because each term contains x.","Add/subtract the coefficients: "+a+" + "+b+" − "+c+" = "+(a+b-c)+".","The simplified expression is "+(a+b-c)+"x."],"like")}
+  if(type==="multi"){let a=rand(2,6),b=rand(1,5),c=rand(1,5);return q(t,"Collect terms with two different magical plants.","Simplify: "+a+"x + "+b+"y + "+c+"x - "+yummy(b)+"y.",(a+c)+"x",["Collect x terms: "+a+"x + "+c+"x = "+(a+c)+"x.","Collect y terms: "+b+"y − "+b+"y = 0.","Answer: "+(a+c)+"x."],"multi")}
+  if(type==="multiply"){let a=rand(2,12);return q(t,"Multiply the spell power by the number of crystals.","Write "+a+" multiplied by x in algebraic notation.",a+"x",["A number multiplied by a variable is written without the × sign.",""+a+" × x is written as "+a+"x."],"multiply")}
+  if(type==="divide"){let a=rand(2,12);return q(t,"Share x magical points equally between "+a+" portals.","Write an expression for x divided by "+a+".","x/"+a,["Division can be shown using a fraction bar.","x divided by "+a+" is written x/"+a+"."],"divide")}
+  if(type==="expand"){let a=rand(2,7),b=rand(2,9);return q(t,"Open the brackets without losing any magic.","Expand: "+a+"(x + "+b+").",a+"x+"+(a*b),["Multiply every term inside the bracket by "+a+".",""+a+" × x = "+a+"x.",""+a+" × "+b+" = "+(a*b)+".","Answer: "+a+"x + "+(a*b)+"."],"expand")}
+  if(type==="expandSimplify"){let a=rand(2,5),b=rand(1,6),c=rand(1,6);return q(t,"Expand the spell, then collect like terms.","Expand and simplify: "+a+"(x + "+b+") + "+c+"x.",(a+c)+"x+"+(a*b),["Expand the bracket: "+a+"(x + "+b+") = "+a+"x + "+(a*b)+".","Add the remaining term: "+a+"x + "+(a*b)+" + "+c+"x.","Collect x terms: "+a+"x + "+c+"x = "+(a+c)+"x.","Answer: "+(a+c)+"x + "+(a*b)+"."],"expandSimplify")}
+  let a=rand(2,7),b=rand(2,9);return q(t,"Factorise the expression to rebuild one bracket.","Factorise: "+(a*b)+"x + "+(a*b),(a*b)+"(x+1)",["Find the highest common factor of "+(a*b)+"x and "+(a*b)+": it is "+(a*b)+".","Take it outside the bracket: "+(a*b)+"(x + 1).","Answer: "+(a*b)+"(x + 1)."],"factorise",{setAnswer:(a*b)+"(x+1)"});
+ }
+ if(t===2){
+  let type=forcedSkill||pick(["place","order","power10","integer","decimal","sigfig","sigbelow","estimate"]);
+  if(type==="place"){let n=pick([3.482,7.056,12.739,0.684,45.291]),parts=String(n).split("."),digit=pick([1,2,3,4,5,6,7,8,9]);let s=String(n),idx=rand(0,s.length-1);while(s[idx]==="."||s[idx]==="0")idx=rand(0,s.length-1);let names={"0":"ones","1":"tenths","2":"hundredths","3":"thousandths"};let after=s.indexOf(".");let pos=idx<after?["ones","tens","hundreds"][Math.min(after-idx-1,2)]:["tenths","hundredths","thousandths"][Math.min(idx-after-1,2)];return q(t,"A map pin has a decimal coordinate.","In "+n+", what is the place value of the digit "+s[idx]+"?",pos,["Look at the digit’s position relative to the decimal point.","Digits to the left are ones, tens, hundreds…","Digits to the right are tenths, hundredths, thousandths…","The digit "+s[idx]+" is in the "+pos+" place."],"place")}
+  if(type==="order"){let a=rand(1,8)+rand(1,9)/10,b=rand(1,8)+rand(1,9)/100,c=rand(1,8)+rand(1,9)/10;let arr=[a,b,c].map(x=>Number(x.toFixed(2)));arr.sort((x,y)=>x-y);return q(t,"Sort the glowing decimal crystals from smallest to largest.","Order: "+[a,b,c].map(x=>x.toFixed(2)).join(", "),arr.map(x=>x.toFixed(2)).join(","),["Write each number to the same number of decimal places.","Compare the ones, then tenths, then hundredths.","Smallest to largest: "+arr.map(x=>x.toFixed(2)).join(", ")+"."],"order",{setAnswer:arr.map(x=>x.toFixed(2)).join(",")})}
+  if(type==="power10"){let n=rand(125,9876),p=pick([10,100,1000]),ans=Math.round(n/p)*p;return q(t,"Round to the nearest power of 10.","Round "+n+" to the nearest "+p+".",ans,["Look at the digit immediately to the right of the target place.","If it is 5 or more, round up; if it is 4 or less, round down.",""+n+" rounded to the nearest "+p+" is "+ans+"."],"power10")}
+  if(type==="integer"){let n=rand(12,98)+rand(1,9)/10,ans=Math.round(n);return q(t,"Round a measurement to a whole unit.","Round "+n.toFixed(1)+" to the nearest integer.",ans,["Look at the tenths digit: "+String(n.toFixed(1)).split(".")[1]+".","If the tenths digit is 5 or more, round up; otherwise round down.","Answer: "+ans+"."],"integer")}
+  if(type==="decimal"){let n=rand(100,9999)/100,dp=pick([1,2]),ans=Number(n.toFixed(dp));return q(t,"A sensor needs a more precise reading.","Round "+n.toFixed(2)+" to "+(dp===1?"1 decimal place":"2 decimal places")+".",fmt(ans),["Find the last digit you need to keep.","Look at the next digit to the right: "+String(n.toFixed(3)).split(".")[1][dp]+".",""+(String(n.toFixed(3)).split(".")[1][dp]>=5?"Round up.":"Keep the target digit the same.")+" The answer is "+ans+"."],"decimal")}
+  if(type==="sigfig"||type==="sigbelow"){let n=type==="sigbelow"?pick([0.004738,0.05286,0.006194]):pick([3478,5629,78341,0.4836,26.75]),sf=pick([1,2,3]),ans=Number(n.toPrecision(sf));return q(t,"The crystal scanner needs a rounded reading.","Round "+n+" to "+sf+" significant figure"+(sf>1?"s":"")+".",fmt(ans),["Start at the first non-zero digit; that is the first significant figure.","Keep "+sf+" significant digit"+(sf>1?"s":"")+" and look at the next digit.",""+n+" rounded to "+sf+" significant figure"+(sf>1?"s":"")+" is "+ans+"."],type)}
+  let a=rand(21,99),b=rand(11,49),ans=Math.round(a/10)*10+Math.round(b/10)*10;return q(t,"Estimate the supplies needed before the journey.","Estimate "+a+" + "+b+" by rounding each number to the nearest 10.",ans,["Round "+a+" to "+Math.round(a/10)*10+".","Round "+b+" to "+Math.round(b/10)*10+".","Add the rounded values: "+Math.round(a/10)*10+" + "+Math.round(b/10)*10+" = "+ans+"."],"estimate")
+ }
+ if(t===3){
+  let type=forcedSkill||pick(["perimeter","compoundPerim","rectangle","parallelogram","triangle","trapezium","Lshape","compound","algebraPerim","algebraArea"]);
+  if(type==="perimeter"){let a=rand(3,15),b=rand(3,12);return q(t,"A rectangular castle garden needs a fence.","A rectangle is "+a+" cm long and "+b+" cm wide. Find its perimeter.",2*(a+b),["Perimeter is the distance all the way around.","A rectangle has two lengths and two widths.","Perimeter = "+a+" + "+b+" + "+a+" + "+b+" = "+(2*(a+b))+" cm."],"perimeter")}
+  if(type==="compoundPerim"){let a=rand(4,10),b=rand(3,8),c=rand(2,6);return q(t,"The castle wall has a step-shaped outline.","An L-shaped outline has outer horizontal lengths "+a+" cm and "+c+" cm, and outer vertical lengths "+b+" cm and "+c+" cm. Find the perimeter if the two missing inner lengths match the opposite step lengths.",2*(a+b+2*c),["Add every outside edge once.","The opposite step edges balance: total horizontal distance is 2 × ("+a+" + "+c+"), and vertical distance is 2 × ("+b+" + "+c+").","Perimeter = 2 × ("+a+" + "+b+" + 2×"+c+") = "+(2*(a+b+2*c))+" cm."],"compoundPerim")}
+  if(type==="rectangle"){let a=rand(4,16),b=rand(3,12);return q(t,"Lay a magic carpet on the castle floor.","Find the area of a rectangle measuring "+a+" cm by "+b+" cm.",a*b,["Area of a rectangle = length × width.","Area = "+a+" × "+b+".","Area = "+(a*b)+" cm²."],"rectangle")}
+  if(type==="parallelogram"){let b=rand(4,14),h=rand(3,10);return q(t,"A parallelogram-shaped banner needs its area measured.","Base = "+b+" cm and perpendicular height = "+h+" cm. Find the area.",b*h,["Area of a parallelogram = base × perpendicular height.","Area = "+b+" × "+h+".","Area = "+(b*h)+" cm²."],"parallelogram")}
+  if(type==="triangle"){let b=pick([6,8,10,12,14,16]),h=pick([3,4,5,6,7,8]);return q(t,"A triangular stained-glass window glows in the castle.","Find the area of a triangle with base "+b+" cm and perpendicular height "+h+" cm.",b*h/2,["Area of a triangle = ½ × base × perpendicular height.","Area = ½ × "+b+" × "+h+".",""+b+" × "+h+" = "+(b*h)+".","Half of "+(b*h)+" is "+(b*h/2)+" cm²."],"triangle")}
+  if(type==="trapezium"){let a=rand(4,12),b=rand(4,12),h=rand(3,9),ans=(a+b)*h/2;return q(t,"A trapezium-shaped courtyard needs paving.","The parallel sides are "+a+" cm and "+b+" cm; the perpendicular height is "+h+" cm. Find the area.",fmt(ans),["Area of a trapezium = ½ × (sum of parallel sides) × height.","Add parallel sides: "+a+" + "+b+" = "+(a+b)+".","Area = ½ × "+(a+b)+" × "+h+" = "+fmt(ans)+" cm²."],"trapezium")}
+  if(type==="Lshape"){let a=rand(6,12),b=rand(5,10),cutx=rand(2,a-2),cuty=rand(2,b-2),ans=a*b-cutx*cuty;return q(t,"An L-shaped courtyard is made by removing a rectangle from a larger one.","The large rectangle is "+a+" cm × "+b+" cm. A "+cutx+" cm × "+cuty+" cm rectangle is cut out. Find the remaining area.",ans,["Find the large rectangle area: "+a+" × "+b+" = "+(a*b)+" cm².","Find the cut-out area: "+cutx+" × "+cuty+" = "+(cutx*cuty)+" cm².","Subtract: "+(a*b)+" − "+(cutx*cuty)+" = "+ans+" cm²."],"Lshape")}
+  if(type==="compound"){let a=rand(4,10),b=rand(3,8),c=rand(2,6),d=rand(2,5);let ans=a*b+c*d;return q(t,"A compound shape is made from two non-overlapping rectangles.","Rectangle A is "+a+" cm × "+b+" cm. Rectangle B is "+c+" cm × "+d+" cm. Find their total area.",ans,["Area of rectangle A = "+a+" × "+b+" = "+(a*b)+" cm².","Area of rectangle B = "+c+" × "+d+" = "+(c*d)+" cm².","Add the two areas: "+(a*b)+" + "+(c*d)+" = "+ans+" cm²."],"compound")}
+  if(type==="algebraPerim"){let a=rand(2,6),b=rand(1,5);return q(t,"The sides of a rectangular magic garden are algebraic expressions.","Length = "+a+"x cm and width = "+b+" cm. Write the perimeter in simplest form.",(2*a)+"x+"+(2*b),["Perimeter = 2 × length + 2 × width.","Substitute: 2("+a+"x) + 2("+b+") = "+(2*a)+"x + "+(2*b)+".","Answer: "+(2*a)+"x + "+(2*b)+" cm."],"algebraPerim")}
+  let a=rand(2,6),b=rand(2,8);return q(t,"Find an algebraic area for the rectangular dragon stable.","Length = "+a+"x and width = "+b+". Write the area in simplest form.",(a*b)+"x",["Area = length × width.","Area = "+a+"x × "+b+".","Multiply the numbers: "+a+" × "+b+" = "+(a*b)+", and keep x.","Answer: "+(a*b)+"x square units."],"algebraArea")
+ }
+ // fractions
+ let type=forcedSkill||pick(["equiv","simplify","mixedToImproper","improperToMixed","add","subtract","intMultiply","multiply","divideIntByFrac","divideFracByInt","divide","mixed"]);
+ if(type==="equiv"){let n=rand(1,5),d=rand(n+1,8),m=rand(2,5);return q(t,"The waterfall bridge needs an equivalent fraction.","Complete: "+n+"/"+d+" = ?/"+(d*m),n*m,["Equivalent fractions multiply the numerator and denominator by the same number.","The denominator changed from "+d+" to "+(d*m+", so multiply by "+m+".").replace("so multiply by","so multiply by"),"Multiply the numerator too: "+n+" × "+m+" = "+(n*m)+".","Answer: "+(n*m)+"/"+(d*m)+"."],"equiv")}
+ if(type==="simplify"){let n=rand(2,8),d=rand(n+1,12),m=pick([2,3,4,5]);return q(t,"Simplify the fraction to unlock a waterfall cave.","Simplify "+(n*m)+"/"+(d*m)+".",frac(n,d),["Find a common factor of numerator and denominator: "+m+".","Divide top and bottom by "+m+": "+(n*m)+" ÷ "+m+" = "+n+"; "+(d*m)+" ÷ "+m+" = "+d+".","Simplified fraction: "+frac(n,d)+"."],"simplify")}
+ if(type==="mixedToImproper"){let w=rand(1,5),n=rand(1,4),d=rand(n+1,8);return q(t,"Convert a mixed-number stepping stone.","Convert "+w+" "+n+"/"+d+" to an improper fraction.",w*d+n,["Multiply the whole number by the denominator: "+w+" × "+d+" = "+(w*d)+".","Add the numerator: "+(w*d)+" + "+n+" = "+(w*d+n)+".","Keep the same denominator. Answer: "+(w*d+n)+"/"+d+"."],"mixedToImproper",{setAnswer:(w*d+n)+"/"+d})}
+ if(type==="improperToMixed"){let d=rand(2,8),w=rand(2,5),n=rand(1,d-1),num=w*d+n;return q(t,"Turn an improper fraction into a mixed number.","Convert "+num+"/"+d+" to a mixed number.",w+" "+n+"/"+d,["Divide the numerator by the denominator: "+num+" ÷ "+d+" = "+w+" remainder "+n+".","The quotient is the whole number; the remainder becomes the new numerator.","Answer: "+w+" "+n+"/"+d+"."],"improperToMixed")}
+ if(type==="add"||type==="subtract"){let d=pick([4,5,6,8,10,12]),a=rand(1,d-1),b=rand(1,d-1);let sign=type==="add"?1:-1;let num=a+sign*b;let ans=frac(num,d);return q(t,"Two streams of water combine or flow away.","Calculate "+a+"/"+d+(type==="add"?" + ":" − ")+b+"/"+d+". Give your answer in simplest form.",ans,["The denominators are the same, so keep the denominator.","Add/subtract the numerators: "+a+(type==="add"?" + ":" − ")+b+" = "+num+".","The result is "+num+"/"+d+". Simplify if possible: "+ans+"."],type,{setAnswer:ans})}
+ if(type==="intMultiply"){let a=rand(2,7),n=rand(1,5),d=pick([4,5,6,8]);let ans=frac(a*n,d);return q(t,"Multiply the potion recipe by a whole-number batch.","Calculate "+a+" × "+n+"/"+d+". Give the answer in simplest form.",ans,["Multiply the integer by the numerator: "+a+" × "+n+" = "+(a*n)+".","Keep the denominator: "+(a*n)+"/"+d+".","Simplify: "+frac(a*n,d)+"."],type,{setAnswer:ans})}
+ if(type==="multiply"){let a=rand(1,5),b=rand(2,7),c=rand(1,5),d=rand(2,7),n=a*c,den=b*d,ans=frac(n,den);return q(t,"Combine two magical fractions by multiplying.","Calculate "+a+"/"+b+" × "+c+"/"+d+". Give your answer in simplest form.",ans,["Multiply the numerators: "+a+" × "+c+" = "+n+".","Multiply the denominators: "+b+" × "+d+" = "+den+".","Simplify "+n+"/"+den+" to "+ans+"."],type,{setAnswer:ans})}
+ if(type==="divideIntByFrac"){let a=rand(2,8),n=1,d=pick([2,3,4,5]);return q(t,"How many fractional scoops fit into the potion supply?","Calculate "+a+" ÷ "+n+"/"+d+".",a*d,["Dividing by a fraction means multiplying by its reciprocal.","The reciprocal of "+n+"/"+d+" is "+d+"/"+n+".",""+a+" × "+d+"/"+n+" = "+(a*d)+"."],type)}
+ if(type==="divideFracByInt"){let a=rand(1,5),b=rand(2,6),c=pick([2,3,4]);let ans=frac(a,b*c);return q(t,"Share a fraction of treasure equally between explorers.","Calculate "+a+"/"+b+" ÷ "+c+". Give your answer in simplest form.",ans,["Dividing by a whole number is the same as multiplying by its reciprocal.",""+a+"/"+b+" ÷ "+c+" = "+a+"/"+b+" × 1/"+c+".","Multiply: "+a+"/"+(b*c)+"; simplify to "+ans+"."],type,{setAnswer:ans})}
+ if(type==="divide"){let a=rand(1,5),b=rand(2,7),c=rand(1,5),d=rand(2,7),num=a*d,den=b*c,ans=frac(num,den);return q(t,"Divide the fraction crystals.","Calculate "+a+"/"+b+" ÷ "+c+"/"+d+". Give your answer in simplest form.",ans,["Keep the first fraction, change ÷ to ×, and flip the second fraction.",""+a+"/"+b+" × "+d+"/"+c+" = "+num+"/"+den+".","Simplify to "+ans+"."],type,{setAnswer:ans})}
+ let w1=rand(1,3),n1=rand(1,3),d=4,w2=rand(1,2),n2=1;let a=w1*d+n1,b=w2*d+n2,ans=frac(a+b,d);return q(t,"A recipe uses mixed-number quantities from two jars.","Calculate "+w1+" "+n1+"/"+d+" + "+w2+" "+n2+"/"+d+". Give your answer as a mixed number or improper fraction.",ans,["Convert to improper fractions: "+w1+" "+n1+"/"+d+" = "+a+"/"+d+" and "+w2+" "+n2+"/"+d+" = "+b+"/"+d+".","Add the numerators: "+a+" + "+b+" = "+(a+b)+", so the total is "+(a+b)+"/"+d+".","Simplify if possible. Answer: "+ans+"."],"mixed",{setAnswer:ans});
+}
+function yummy(x){return x}
+function norm(s){return String(s||"").toLowerCase().trim().replace(/[×·]/g,"x").replace(/−/g,"-").replace(/\s+/g,"").replace(/,/g,",").replace(/\.0+$/,"")}
+function equivalentFractionInput(input, expected, qobj){
+ let n=norm(input), e=norm(expected);
+ if(n===e)return true;
+ // accept comma separated lists regardless of spaces
+ if(qobj.setAnswer && n===norm(qobj.setAnswer))return true;
+ // numeric answer equivalence
+ if(/^-?\d+(\.\d+)?$/.test(n)&&/^-?\d+(\.\d+)?$/.test(e))return Math.abs(Number(n)-Number(e))<1e-8;
+ // fraction equivalence
+ const parseF=s=>{let m=s.match(/^(-?\d+)\/(-?\d+)$/);if(!m)return null;return Number(m[1])/Number(m[2])};
+ let nf=parseF(n),ef=parseF(e);if(nf!==null&&ef!==null&&Math.abs(nf-ef)<1e-8)return true;
+ // mixed number support
+ const mixed=s=>{let m=s.match(/^(-?\d+)(\d+)\/(\d+)$/);if(!m)return null;return Number(m[1])+Number(m[2])/Number(m[3])};
+ let nm=mixed(n),em=mixed(e);if(nm!==null&&ef!==null&&Math.abs(nm-ef)<1e-8)return true;
+ if(nf!==null&&em!==null&&Math.abs(nf-em)<1e-8)return true;
+ // comma lists
+ const list=s=>s.split(",").map(x=>x.trim()).join(",");
+ return list(n)===list(e);
+}
+function generateRound(){
+ round++;score=0;correctCount=0;retryCount=0;roundMissed=0;roundCorrect=0;index=0;
+ // Build 10 mixed questions, cycling topics so every realm is represented.
+ let arr=[];for(let i=0;i<10;i++){let t=i%5;arr.push(makeQ(t));arr.push;}
+ // shuffle question order and remove accidental adjacent topic patterns where practical
+ for(let i=arr.length-1;i>0;i--){let j=rand(0,i);[arr[i],arr[j]]=[arr[j],arr[i]]}
+ mainQs=arr;queue=arr.map((question,i)=>({question,kind:"main",mainIndex:i}));missedSkills=[];current=null;awaiting=false;
+ $("welcome").style.display="none";$("summary").style.display="none";$("game").style.display="block";
+ $("round-label").textContent="Round "+round+" • Mixed realm challenge";$("round-sub").textContent="10 main questions + any recovery challenges";
+ showQuestion();
+}
+function showQuestion(){
+ if(queue.length===0){finishRound();return}
+ current=queue.shift();awaiting=false;
+ let qobj=current.question;
+ $("topic").textContent=topics[qobj.topic].name;
+ $("qnum").textContent=current.kind==="main"?"Main question "+(current.mainIndex+1)+" of 10":"🔁 Recovery challenge";
+ $("story").textContent=qobj.story;
+ $("question").textContent=qobj.question;
+ $("answer").value="";$("answer").disabled=false;$("submit").disabled=false;$("answer").focus();
+ $("feedback").className="feedback";$("feedback").innerHTML="";
+ $("next-row").classList.add("hidden");
+ $("progress").style.width=(Math.min(10,index)/10*100)+"%";
+ $("hint").textContent=current.kind==="retry"?"Second chance! Try using the worked steps from earlier.":"Tip: Type fractions like 3/4, decimals like 0.75, or algebra like 3x+2.";
+}
+function checkAnswer(){
+ if(awaiting)return;
+ let input=$("answer").value.trim();if(!input){$("hint").textContent="Type an answer first — you’ve got this!";return}
+ let ok=equivalentFractionInput(input,current.question.answer,current.question);
+ let fb=$("feedback");awaiting=true;$("answer").disabled=true;$("submit").disabled=true;
+ if(ok){
+  if(current.kind==="main"){score++;roundCorrect++;correctCount++;xp+=10;coins+=5;fb.className="feedback good";fb.innerHTML="<h3>🌟 Brilliant! That’s correct!</h3>+10 XP and +5 coins. "+(current.question.topic===4?"Fraction-tastic!": "Keep that momentum going!") }
+  else {retryCount++;xp+=6;coins+=3;fb.className="feedback good";fb.innerHTML="<h3>🔁 Recovery unlocked!</h3>You fixed a tricky skill. +6 XP and +3 coins. That’s how mathematicians get stronger!"}
+ } else {
+  if(current.kind==="main"){roundMissed++;xp+=2;coins+=1}
+  fb.className="feedback bad";
+  fb.innerHTML="<h3>🧩 Not quite — but this is how you learn!</h3><b>Let’s work it out together:</b><div class='work'><ol>"+current.question.work.map(s=>"<li>"+escapeHTML(s)+"</li>").join("")+"</ol><b>Answer: "+escapeHTML(current.question.answer)+"</b></div><p>💡 You’ll see this skill again in a few questions. Read the steps, then give it another go!</p>";
+  if(current.kind==="main"){
+   // Repeat the same question after three subsequent questions; don't count retry as one of the 10 main questions.
+   let retry={question:current.question,kind:"retry",mainIndex:current.mainIndex};
+   let insertAt=Math.min(3,queue.length);queue.splice(insertAt,0,retry);
+  } else {fb.innerHTML+="<p>It’s okay — keep practising. You can try this skill again in another round.</p>"}
+ }
+ $("xp").textContent=xp;$("coins").textContent=coins;
+ if(current.kind==="main")index++;
+ $("next-row").classList.remove("hidden");$("next").textContent=queue.length?"Next challenge →":"See my results 🏆";
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function finishRound(){
+ $("game").style.display="none";$("summary").style.display="block";
+ $("score").textContent=score;
+ let title,emoji,copy;
+ if(score===10){title="Legendary Maths Hero!";emoji="👑";copy="A perfect 10! You’ve restored the Crystal of Numbers. The dragon is impressed."}
+ else if(score>=8){title="Realm-saving superstar!";emoji="🏆";copy="Amazing work! You’re building strong maths powers. A few more quests could make you unstoppable."}
+ else if(score>=5){title="Brave explorer!";emoji="🧙‍♀️";copy="Great effort. Every question you tried made you stronger. Review the tricky skills and take on another round!"}
+ else{title="Quest apprentice!";emoji="🌱";copy="You showed up and practised — that matters. Use the worked examples as clues and try again. Your next score can grow!"}
+ $("summary-title").textContent=title;$("reward-emoji").textContent=emoji;$("summary-copy").textContent=copy;
+ $("stats-copy").textContent="Correct on first try: "+score+"/10 • Main questions missed: "+roundMissed+" • Recovery challenges attempted: "+retryCount+" • Total XP: "+xp+" • Coins collected: "+coins;
+ let b=[];if(score===10)b.push("💎 Perfect 10");if(score>=8)b.push("🔥 Maths Hero");if(retryCount>0)b.push("🔁 Comeback Champion");if(roundMissed>0)b.push("💪 Brave Learner");if(round>=3)b.push("🗺️ Persistent Explorer");$("badges").innerHTML=b.map(x=>"<span class='badge'>"+x+"</span>").join("");
+}
+$("start").addEventListener("click",generateRound);
+$("submit").addEventListener("click",checkAnswer);
+$("answer").addEventListener("keydown",e=>{if(e.key==="Enter"){if(awaiting)$("next").click();else checkAnswer()}});
+$("next").addEventListener("click",showQuestion);
+$("again").addEventListener("click",generateRound);
+$("home").addEventListener("click",()=>{$("summary").style.display="none";$("welcome").style.display="block"});
+$("quit").addEventListener("click",()=>{if(confirm("Pause this quest and return to the adventure map? Your XP and coins will stay for this session.")){ $("game").style.display="none";$("welcome").style.display="block"}});
+})();
+</script>
+</body></html>
